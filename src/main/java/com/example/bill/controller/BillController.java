@@ -1,7 +1,10 @@
 package com.example.bill.controller;
 
+import com.example.bill.dto.ApiErrorDto;
+import com.example.bill.dto.BillDto;
 import com.example.bill.dto.ProductDto;
-import com.example.bill.service.BillService;
+import com.example.bill.service.CalculateBillService;
+import com.example.bill.service.PrintBillService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,26 +17,54 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Bill Api
+ */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/bill")
 @Validated
 @RequiredArgsConstructor
 public class BillController {
 
-    private final BillService billService;
+    private final CalculateBillService calculateBillService;
+    private final PrintBillService printBillService;
 
-    @PostMapping("/bill")
-    @Operation(summary = "Calculation of taxes on a shopping cart , " +
-                         "Returns bill listing each product and its price including VAT")
+    /**
+     * Calculation and print of bill taxes on a shopping cart
+     * @param productDtoList list of product on the shopping cart which the bill details
+     * @return Returns writing bill listing each product and its price including VAT
+     */
+    @PostMapping("/print")
+    @Operation(summary = "Calculation and print of bill taxes on a shopping cart , " +
+                         "Returns writing bill listing each product and its price including VAT")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful response",
-                    content = @Content),
+                    content = @Content(schema =  @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content) })
-    ResponseEntity<String> CalculateBill (@Valid @RequestBody List<ProductDto> productDtoList) {
-        return new ResponseEntity<>(billService.CalculateAndWriteBill(productDtoList),HttpStatus.OK);
+                    content = @Content(schema =  @Schema(implementation = ApiErrorDto.class)))})
+    ResponseEntity<String> CalculateAndPrintBill(@Valid @RequestBody List<ProductDto> productDtoList) {
+        return new ResponseEntity<>(printBillService.printBill(calculateBillService.CalculateBill(productDtoList)),HttpStatus.OK);
+    }
+
+    /**
+     * Calculation of bill taxes on a shopping cart
+     * @param productDtoList list of product on the shopping cart which the bill details
+     * @return Returns Object bill listing each product and its price including VAT
+     */
+    @PostMapping()
+    @Operation(summary = "Calculation of taxes on a shopping cart , " +
+            "Returns Object bill listing each product and its price including VAT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful response",
+                    content = @Content(schema =  @Schema(implementation = BillDto.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content(schema =  @Schema(implementation = ApiErrorDto.class))) })
+    ResponseEntity<BillDto> CalculateBill(@Valid @RequestBody @NotEmpty @NotNull List<ProductDto> productDtoList) {
+        return new ResponseEntity<>(calculateBillService.CalculateBill(productDtoList),HttpStatus.OK);
     }
 
 }
