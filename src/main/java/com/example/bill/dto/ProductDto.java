@@ -3,12 +3,14 @@ package com.example.bill.dto;
 import com.example.bill.domain.ProductTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Data
+@Builder
 public class ProductDto {
 
     @Schema(description = "Name of the Product.", example = "Livres")

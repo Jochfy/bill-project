@@ -34,13 +34,13 @@ public class PrintBillService {
         //print the tax amount
         b.append(TAX_AMOUNT_LABEL).
                 append(SPACE).
-                append(SEPARATION_SIGN).
+                append(COLON_SEPARATION_SIGN).
                 append(SPACE).
                 append(bill.getTaxAmount().toString()).append(CURRENCY_SIGN).append(System.getProperty(LINE_SEPARATOR));
         //print the total amount
         b.append(TOTAL_AMOUNT_LABEL).
                 append(SPACE).
-                append(SEPARATION_SIGN).
+                append(COLON_SEPARATION_SIGN).
                 append(SPACE).
                 append(bill.getTotalPrice().toString()).append(CURRENCY_SIGN);
         return b.toString();
@@ -65,7 +65,7 @@ public class PrintBillService {
                 append(SPACE).
                 append(EXCLUSIVE_OF_TAXES).
                 append(SPACE).
-                append(SEPARATION_SIGN).
+                append(COLON_SEPARATION_SIGN).
                 append(SPACE).
                 append(productDto.getTtcPrice()).
                 append(CURRENCY_SIGN).

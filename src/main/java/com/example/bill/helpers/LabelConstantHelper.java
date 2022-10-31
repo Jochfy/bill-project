@@ -17,7 +17,8 @@ public class LabelConstantHelper {
     public static final String CURRENCY_SIGN = "€";
     public static final String ASTERISK_SIGN = "*";
     public static final String SPACE = " ";
-    public static final String SEPARATION_SIGN = ":";
+    public static final String COLON_SEPARATION_SIGN = ":";
+    public static final String COMMA_SEPARATION_SIGN = ":";
     public static final String EXCLUSIVE_OF_TAXES = "HT";
     public static final String INCLUSIVE_OF_TAXES = "TTC";
 

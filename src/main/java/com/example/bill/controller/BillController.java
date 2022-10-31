@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import static com.example.bill.BillApplication.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -25,11 +26,12 @@ import java.util.List;
  * Bill Api
  */
 @RestController
-@RequestMapping("/api/bill")
+@RequestMapping(BillController.API_PATH)
 @Validated
 @RequiredArgsConstructor
 public class BillController {
 
+    public static final String API_PATH = BASE_API_PATH+ "/api";
     private final CalculateBillService calculateBillService;
     private final PrintBillService printBillService;
 

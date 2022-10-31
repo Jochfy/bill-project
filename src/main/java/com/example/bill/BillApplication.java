@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BillApplication {
 
+	public static final String BASE_API_PATH = "/api";
 	public static void main(String[] args) {
 		SpringApplication.run(BillApplication.class, args);
 	}
