@@ -5,10 +5,13 @@ import lombok.RequiredArgsConstructor;
 /**
  * Helper useful for constant messages
  */
-@RequiredArgsConstructor
 public class LabelConstantHelper {
 
-    public static final String À = "à";
+    private LabelConstantHelper() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static final String A = "à";
     public static final String LINE_SEPARATOR = "line.separator";
     public static final String HEAD_OF_BILL = "Facture";
     public static final String TAX_AMOUNT_LABEL = "Montant des taxes";

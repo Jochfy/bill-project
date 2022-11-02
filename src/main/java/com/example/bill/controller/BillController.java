@@ -51,8 +51,8 @@ public class BillController {
                     content = @Content(schema =  @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
                     content = @Content(schema =  @Schema(implementation = ApiErrorDto.class)))})
-    ResponseEntity<String> CalculateAndPrintBill(@Valid @RequestBody List<ProductDto> productDtoList) {
-        BillDto billDto = calculateBillService.CalculateBill(productDtoList);
+    ResponseEntity<String> calculateAndPrintBill(@Valid @RequestBody List<ProductDto> productDtoList) {
+        BillDto billDto = calculateBillService.calculateBill(productDtoList);
         return new ResponseEntity<>(printBillService.printBill(Objects.requireNonNull(billDto)),HttpStatus.OK);
     }
 
@@ -69,8 +69,8 @@ public class BillController {
                     content = @Content(schema =  @Schema(implementation = BillDto.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
                     content = @Content(schema =  @Schema(implementation = ApiErrorDto.class))) })
-    ResponseEntity<BillDto> CalculateBill(@Valid @RequestBody @NotEmpty @NotNull List<ProductDto> productDtoList) {
-        return new ResponseEntity<>(calculateBillService.CalculateBill(productDtoList),HttpStatus.OK);
+    ResponseEntity<BillDto> calculateBill(@Valid @RequestBody @NotEmpty @NotNull List<ProductDto> productDtoList) {
+        return new ResponseEntity<>(calculateBillService.calculateBill(productDtoList),HttpStatus.OK);
     }
 
 }

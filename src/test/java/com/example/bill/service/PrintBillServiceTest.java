@@ -15,7 +15,7 @@ import java.util.Objects;
  * test class for printBill service
  */
 @SpringBootTest
-public class PrintBillServiceTest {
+class PrintBillServiceTest {
 
     @Autowired
     PrintBillService printBillService;
@@ -30,8 +30,8 @@ public class PrintBillServiceTest {
      * test should print bill
      */
     @Test
-    public void should_print_bill() {
-        BillDto billDto = calculateBillService.CalculateBill(productDtoList1);
+    void should_print_bill() {
+        BillDto billDto = calculateBillService.calculateBill(productDtoList1);
         String printBill = printBillService.printBill(billDto);
         ProductDto productDto0 = Objects.requireNonNull(productDtoList1.get(0));
         StringBuilder lineOfBillPrinted = PrintBillService.buildStringForProducts(new StringBuilder(),productDto0);

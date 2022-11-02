@@ -21,10 +21,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CalculateBillService {
 
-    private final static BigDecimal taxOnBooks = new BigDecimal("0.1");
-    private final static BigDecimal taxOnOtherProduct = new BigDecimal("0.2");
-    private final static BigDecimal taxForImportedProduct = new BigDecimal("0.05");
-    private final static BigDecimal defaultTax = new BigDecimal("0");
+    private static final  BigDecimal defaultTax = new BigDecimal("0");
+    private static final  BigDecimal taxForImportedProduct = new BigDecimal("0.05");
+    private static final  BigDecimal taxOnBooks = new BigDecimal("0.1");
+    private static final  BigDecimal taxOnOtherProduct = new BigDecimal("0.2");
+
 
     /**
      * Calculate the bill
@@ -32,7 +33,7 @@ public class CalculateBillService {
      * @param productDtoList : - list of product on the shopping cart
      * @return Object BillDto details the bill listing each product and its price including VAT
      */
-    public BillDto CalculateBill(@NotNull @NotEmpty List<ProductDto> productDtoList) {
+    public BillDto calculateBill(@NotNull @NotEmpty List<ProductDto> productDtoList) {
         productDtoList.forEach(this::calculatePriceTTC);
         return buildBill(productDtoList);
     }
@@ -60,8 +61,8 @@ public class CalculateBillService {
         if (Objects.nonNull(productDto)) {
             BigDecimal taxAmount = getTaxAmount(productDto);
             // price without taxe
-            BigDecimal HTPrice = productDto.getPrice().multiply(BigDecimal.valueOf(productDto.quantity));
-            productDto.setTtcPrice(HTPrice.add(taxAmount));
+            BigDecimal htprice = productDto.getPrice().multiply(BigDecimal.valueOf(productDto.quantity));
+            productDto.setTtcPrice(htprice.add(taxAmount));
             productDto.setTaxAmount(taxAmount);
         }
     }

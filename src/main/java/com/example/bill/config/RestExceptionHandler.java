@@ -27,10 +27,10 @@ import java.util.List;
 @Slf4j
 public class RestExceptionHandler {
 
-    public static String CONSTRAINT_VIOLATION_EXCEPTION_MESSAGE = "A ConstraintViolationException occurred : ";
-    public static String HTTP_MEDIA_TYPE_NOT_SUPPORTED_EXCEPTION_MESSAGE = " media type is not supported. Supported media types are ";
+    public static final String CONSTRAINT_VIOLATION_EXCEPTION_MESSAGE = "A ConstraintViolationException occurred : ";
+    public static final String HTTP_MEDIA_TYPE_NOT_SUPPORTED_EXCEPTION_MESSAGE = " media type is not supported. Supported media types are ";
 
-    public static String EXCEPTION_MESSAGE = "An Exception Error occurred :";
+    public static final String EXCEPTION_MESSAGE = "An Exception Error occurred :";
 
 
 

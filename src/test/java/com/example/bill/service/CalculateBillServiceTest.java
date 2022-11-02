@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * Test class for calculate bill service
  */
 @SpringBootTest
-public class CalculateBillServiceTest {
+class CalculateBillServiceTest {
 
     @Autowired
     CalculateBillService calculateBillService;
@@ -37,8 +37,8 @@ public class CalculateBillServiceTest {
 
     @ParameterizedTest
     @MethodSource("list_of_valid_productDtoList")
-    public void should_compute_bill_with_valid_productDtoList(List<ProductDto> productDtoList, BigDecimal expectedTotalPrice, BigDecimal expectedTaxAmount) {
-        BillDto billDto = calculateBillService.CalculateBill(productDtoList);
+    void should_compute_bill_with_valid_productDtoList(List<ProductDto> productDtoList, BigDecimal expectedTotalPrice, BigDecimal expectedTaxAmount) {
+        BillDto billDto = calculateBillService.calculateBill(productDtoList);
         Assertions.assertEquals(expectedTotalPrice, billDto.getTotalPrice());
         Assertions.assertEquals(expectedTaxAmount, billDto.getTaxAmount());
     }

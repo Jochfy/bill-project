@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class BillControllerIT {
+class BillControllerIT {
 
     @Autowired
     MockMvc mockMvc;
@@ -54,7 +54,7 @@ public class BillControllerIT {
      * test of rest api which calculate bill should return OK
      */
     @Test
-    public void calculate_bill_with_productDto_list_should_return_ok() throws Exception {
+    void calculate_bill_with_productDto_list_should_return_ok() throws Exception {
         String requestJson = UtilBuilderProductDtoList.buildProductDtoList1AndWriteItAsString();
         mockMvc.perform(post(BillController.API_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ public class BillControllerIT {
      * test of rest api which calculate and print bill should return OK
      */
     @Test
-    public void calculate_bill_and_print_with_productDto_list_should_return_ok() throws Exception {
+     void calculate_bill_and_print_with_productDto_list_should_return_ok() throws Exception {
         String requestJson = UtilBuilderProductDtoList.buildProductDtoList1AndWriteItAsString();
         mockMvc.perform(post(BillController.API_PATH + BillController.CALCULATING_AND_PRINT_BILL_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ public class BillControllerIT {
      */
     @ParameterizedTest
     @MethodSource("list_of_non_valid_productDtoList")
-    public void calculate_bill_and_print_with_none_valid_productDto_list_should_return_bad_request(String requestJson, String message1, String message2) throws Exception {
+     void calculate_bill_and_print_with_none_valid_productDto_list_should_return_bad_request(String requestJson, String message1, String message2) throws Exception {
         mockMvc.perform(post(BillController.API_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
@@ -95,8 +95,8 @@ public class BillControllerIT {
      */
     private static Stream<Arguments> list_of_non_valid_productDtoList() {
         return Stream.of(
-                Arguments.of(productDtoListNoneValidePriceRequest, "CalculateBill.productDtoList[0].price", "must be greater than or equal to " + ProductDto.minPrice),
-                Arguments.of(productDtoListNoneValideQuantityRequest, "CalculateBill.productDtoList[0].quantity", "must be greater than or equal to " + ProductDto.minQuantity),
+                Arguments.of(productDtoListNoneValidePriceRequest, "CalculateBill.productDtoList[0].price", "must be greater than or equal to " + ProductDto.MIN_PRICE),
+                Arguments.of(productDtoListNoneValideQuantityRequest, "CalculateBill.productDtoList[0].quantity", "must be greater than or equal to " + ProductDto.MIN_QUANTITY),
                 Arguments.of(productDtoListNoneValidTypeRequest, "CalculateBill.productDtoList[0].type", "must not be null")
         );
     }

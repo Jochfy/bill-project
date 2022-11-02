@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class RestExceptionHandlerIT {
+class RestExceptionHandlerIT {
 
     @Autowired
     MockMvc mockMvc;
@@ -47,7 +47,7 @@ public class RestExceptionHandlerIT {
      * @throws Exception Checked exceptions throws clause
      */
     @Test
-    public void should_return_bad_request_error_on_ConstraintViolationException() throws Exception {
+    void should_return_bad_request_error_on_ConstraintViolationException() throws Exception {
         String requestJson = UtilBuilderProductDtoList.writeProductDtoListAsString(new ArrayList<>());
         mockMvc.perform(post( BillController.API_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,7 +64,7 @@ public class RestExceptionHandlerIT {
      * @throws Exception Checked exceptions throws clause
      */
     @Test
-    public void should_return_unsupported_media_Type_error_on_httpMediaTypeNotSupportedException() throws Exception {
+    void should_return_unsupported_media_Type_error_on_httpMediaTypeNotSupportedException() throws Exception {
         mockMvc.perform(post(BillController.API_PATH)
                         .contentType(MediaType.APPLICATION_ATOM_XML)
                         .content("requestJson"))
@@ -78,9 +78,9 @@ public class RestExceptionHandlerIT {
      * @throws Exception Checked exceptions throws clause
      */
     @Test
-    public void should_return_internal_server_error_on_exception() throws Exception {
+    void should_return_internal_server_error_on_exception() throws Exception {
         List<ProductDto> productDtoList = UtilBuilderProductDtoList.buildProductDtoList1();
-        Mockito.when(calculateBillService.CalculateBill(productDtoList)).thenThrow(new RuntimeException());
+        Mockito.when(calculateBillService.calculateBill(productDtoList)).thenThrow(new RuntimeException());
         mockMvc.perform(post( BillController.API_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(UtilBuilderProductDtoList.buildProductDtoList1AndWriteItAsString()))

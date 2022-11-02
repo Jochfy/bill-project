@@ -8,6 +8,10 @@ import java.math.RoundingMode;
  */
 public class BillHelper {
 
+    private BillHelper() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Util method for rounding number to an increment
      * @param value - the BigDecimal whose value is rounded

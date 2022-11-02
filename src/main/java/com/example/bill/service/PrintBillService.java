@@ -63,10 +63,10 @@ public class PrintBillService {
                 append(productDto.name).
                 append(SPACE);
 
-        if (productDto.imported)
+        if (Boolean.TRUE.equals(productDto.imported))
             b.append(IMPORTED).append(SPACE);
 
-        return  b.append(À).
+        return  b.append(A).
                 append(SPACE).
                 append(productDto.price).
                 append(CURRENCY_SIGN).
