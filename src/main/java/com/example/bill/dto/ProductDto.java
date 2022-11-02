@@ -13,14 +13,18 @@ import java.math.BigDecimal;
 @Builder
 public class ProductDto {
 
+    public static final long minQuantity = 1;
+    public static final String minPrice = "0.01";
+
     @Schema(description = "Name of the Product.", example = "Livres")
     public String name;
 
     @NotNull
-    @Min(1)
+    @Min(minQuantity)
     @Schema(description = "Quantity of the Product.Required field.Minimum value  is 1.", example = "2")
     public Integer quantity;
 
+    @NotNull
     @Schema(description = "Type of product, that can only be : \n" +
             "* FIRST_NEED => i.e. food and medicine ,No value added tax (VAT) is applied to the FIRST_NEED products \n" +
             " OR \n" +
@@ -30,7 +34,7 @@ public class ProductDto {
     public ProductTypeEnum type;
 
     @NotNull
-    @DecimalMin("0.01")
+    @DecimalMin(minPrice)
     @Schema(description = "Price of the Product.Minimum value is 1 cent.", example = "12.91")
     public BigDecimal price;
 

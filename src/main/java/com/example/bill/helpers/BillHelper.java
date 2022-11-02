@@ -21,8 +21,7 @@ public class BillHelper {
             return value;
         } else {
             BigDecimal divided = value.divide(increment, 0, roundingMode);
-            BigDecimal result = divided.multiply(increment);
-            return result;
+            return divided.multiply(increment);
         }
     }
 

@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Service wich provide calculate bill functionalities for the application
+ * Service which provide calculate bill functionalities for the application
  */
 @Service
 @RequiredArgsConstructor
 public class CalculateBillService {
 
-    private static BigDecimal taxOnBooks = new BigDecimal("0.1");
-    private static BigDecimal taxOnOtherProduct = new BigDecimal("0.2");
-    private static BigDecimal taxForImportedProduct = new BigDecimal("0.05");
-    private static BigDecimal defaultTax = new BigDecimal("0");
+    private final static BigDecimal taxOnBooks = new BigDecimal("0.1");
+    private final static BigDecimal taxOnOtherProduct = new BigDecimal("0.2");
+    private final static BigDecimal taxForImportedProduct = new BigDecimal("0.05");
+    private final static BigDecimal defaultTax = new BigDecimal("0");
 
     /**
      * Calculate the bill
@@ -33,7 +33,7 @@ public class CalculateBillService {
      * @return Object BillDto details the bill listing each product and its price including VAT
      */
     public BillDto CalculateBill(@NotNull @NotEmpty List<ProductDto> productDtoList) {
-        productDtoList.stream().forEach((productDto) -> calculatePriceTTC(productDto));
+        productDtoList.forEach(this::calculatePriceTTC);
         return buildBill(productDtoList);
     }
 
@@ -74,7 +74,7 @@ public class CalculateBillService {
      */
     private BigDecimal getTaxAmount(ProductDto productDto) {
         BigDecimal priceTVARoundedTo5Cent = getTVARoundedTo5Cent(productDto.price, productDto.type);
-        BigDecimal priceTIRoundedTo5Cent = getTIRoundedTo5Cent(productDto.imported != null && Boolean.TRUE.equals(productDto.imported), productDto.price);
+        BigDecimal priceTIRoundedTo5Cent = getTIRoundedTo5Cent(Boolean.TRUE.equals(productDto.imported), productDto.price);
         return priceTVARoundedTo5Cent.add(priceTIRoundedTo5Cent).multiply(BigDecimal.valueOf(productDto.quantity));
     }
 
@@ -87,7 +87,7 @@ public class CalculateBillService {
      */
     private BigDecimal getTVARoundedTo5Cent(BigDecimal price, ProductTypeEnum productType) {
         BigDecimal priceTVARoundedTo5Cent = defaultTax;
-        if (productType != null && (ProductTypeEnum.BOOK.equals(productType) || ProductTypeEnum.OTHER.equals(productType))) {
+        if ((ProductTypeEnum.BOOK.equals(productType) || ProductTypeEnum.OTHER.equals(productType))) {
             priceTVARoundedTo5Cent = roundTo5Cent(calculateTVA(price, productType));
         }
         return priceTVARoundedTo5Cent;

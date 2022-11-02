@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Bill Api
@@ -31,7 +32,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BillController {
 
-    public static final String API_PATH = BASE_API_PATH+ "/api";
+    public static final String API_PATH = BASE_API_PATH+ "/bill";
+
+    public static final String CALCULATING_AND_PRINT_BILL_PATH = "/print";
     private final CalculateBillService calculateBillService;
     private final PrintBillService printBillService;
 
@@ -40,7 +43,7 @@ public class BillController {
      * @param productDtoList list of product on the shopping cart which the bill details
      * @return Returns writing bill listing each product and its price including VAT
      */
-    @PostMapping("/print")
+    @PostMapping(CALCULATING_AND_PRINT_BILL_PATH)
     @Operation(summary = "Calculation and print of bill taxes on a shopping cart , " +
                          "Returns writing bill listing each product and its price including VAT")
     @ApiResponses(value = {
@@ -49,7 +52,8 @@ public class BillController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
                     content = @Content(schema =  @Schema(implementation = ApiErrorDto.class)))})
     ResponseEntity<String> CalculateAndPrintBill(@Valid @RequestBody List<ProductDto> productDtoList) {
-        return new ResponseEntity<>(printBillService.printBill(calculateBillService.CalculateBill(productDtoList)),HttpStatus.OK);
+        BillDto billDto = calculateBillService.CalculateBill(productDtoList);
+        return new ResponseEntity<>(printBillService.printBill(Objects.requireNonNull(billDto)),HttpStatus.OK);
     }
 
     /**
